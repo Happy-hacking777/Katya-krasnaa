@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 
+
 // Step 1: Define a type for Artwork
 type Artwork = {
   id: number;
