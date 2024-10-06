@@ -17,7 +17,7 @@ const artworks = [
   { id: 1, src: "/images/Picture1.png", title: "Double Portrait", description: "Oil on canvas", price: "€500" },
   { id: 2, src: "/images/Picture7.png", title: "Reinventing Kusama", description: "Oil on canvas", price: "€800" },
   { id: 3, src: "/images/Picture2.png", title: "Abstract", description: "Oil on canvas", price: "€800" },
-  { id: 4, src: "/images/Picture3.png", title: "Portrait 2", description: "Oil on canvas", price: "€700" }, // Corrected "Portret 2" to "Portrait 2" and removed "canvasd"
+  { id: 4, src: "/images/Picture3.png", title: "Portrait 2", description: "Oil on canvas", price: "€700" },
   { id: 5, src: "/images/Picture4.png", title: "My Dog", description: "Oil on canvas", price: "€300" },
   { id: 6, src: "/images/Picture5.png", title: "David in Leaves", description: "Oil on canvas", price: "€600" },
   { id: 7, src: "/images/Picture6.png", title: "Venera in Leaves", description: "Oil on canvas", price: "€600" },
@@ -40,20 +40,20 @@ export default function SimplifiedArtistPortfolioComponent() {
   }, [])
 
   // Function to handle zoom in and out with mouse wheel
-  const handleZoom = (e) => {
+  const handleZoom = (e: React.WheelEvent) => {
     e.preventDefault()
     const zoomDirection = e.deltaY > 0 ? -0.1 : 0.1
     setZoom((prevZoom) => Math.max(1, prevZoom + zoomDirection)) // Ensure zoom doesn't go below 1
   }
 
   // Start dragging the image
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
     setStartDrag({ x: e.clientX - position.x, y: e.clientY - position.y })
   }
 
   // Move the image while dragging
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging) {
       setPosition({
         x: e.clientX - startDrag.x,
@@ -173,56 +173,6 @@ export default function SimplifiedArtistPortfolioComponent() {
         ))}
       </motion.div>
 
-      {/* Selected Artwork Modal */}
-      {/* Firework animation */}
-      <AnimatePresence>
-        {showFirework && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 bg-black z-50 flex items-center justify-center"
-          >
-            {artworks.slice(0, 6).map((artwork, index) => {
-              // Check screen width to adjust the size and positioning for mobile devices
-              const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-              const radius = isMobile ? 100 : 200; // Smaller radius for mobile
-              const imgSize = isMobile ? "w-20 h-20" : "w-40 h-40"; // Smaller image size for mobile
-
-              return (
-                <motion.img
-                  key={artwork.id}
-                  src={artwork.src}
-                  alt={artwork.title}
-                  className={`absolute ${imgSize} object-cover rounded-full`} // Use dynamic sizing
-                  initial={{
-                    x: 0,
-                    y: 0,
-                    scale: 0,
-                    rotate: 0,
-                  }}
-                  animate={{
-                    x: Math.cos(index * (Math.PI * 2 / 6)) * radius, // Adjust based on screen size
-                    y: Math.sin(index * (Math.PI * 2 / 6)) * radius,
-                    scale: 1,
-                    rotate: 360,
-                    transition: {
-                      duration: 2,
-                      delay: index * 0.2,
-                      ease: "easeOut",
-                    },
-                  }}
-                  exit={{
-                    scale: 0,
-                    transition: { duration: 0.5 },
-                  }}
-                />
-              );
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
       {/* Contact Section */}
       <footer className="mt-16 bg-gray-100 p-8 rounded-lg text-center">
         <h2 className="text-2xl font-bold mb-4">Contact the Artist</h2>
