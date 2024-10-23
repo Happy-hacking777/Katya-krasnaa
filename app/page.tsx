@@ -78,46 +78,46 @@ export default function SimplifiedArtistPortfolioComponent() {
   return (
     <div className="min-h-screen bg-white p-8 overflow-hidden">
       <AnimatePresence>
-        {showFirework && windowSize.width > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 bg-black z-50 flex items-center justify-center"
-          >
-            {artworks.map((artwork, index) => (
-              <motion.img
-                key={artwork.id}
-                src={artwork.src}
-                alt={artwork.title}
-                className="absolute rounded-full object-cover w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40"
-                initial={{
-                  x: 0,
-                  y: 0,
-                  scale: 0,
-                  rotate: 0,
-                }}
-                animate={{
-                  x: Math.cos(index * (Math.PI * 2 / artworks.length)) * (windowSize.width < 640 ? 100 : 200),
-                  y: Math.sin(index * (Math.PI * 2 / artworks.length)) * (windowSize.width < 640 ? 100 : 200),
-                  scale: 1,
-                  rotate: 360,
-                  transition: {
-                    duration: 2,
-                    delay: index * 0.2,
-                    ease: "easeOut",
-                  },
-                }}
-                exit={{
-                  scale: 0,
-                  transition: { duration: 0.5 },
-                }}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+  {showFirework && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+    >
+      {artworks.slice(0, 6).map((artwork, index) => ( // Limit to first 6 artworks
+        <motion.img
+          key={artwork.id}
+          src={artwork.src}
+          alt={artwork.title}
+          className="absolute w-40 h-40 object-cover rounded-full"
+          initial={{
+            x: 0,
+            y: 0,
+            scale: 0,
+            rotate: 0,
+          }}
+          animate={{
+            x: Math.cos(index * (Math.PI * 2 / 6)) * 200, // Using 6 items for position calculation
+            y: Math.sin(index * (Math.PI * 2 / 6)) * 200,
+            scale: 1,
+            rotate: 360,
+            transition: {
+              duration: 2,
+              delay: index * 0.2,
+              ease: "easeOut",
+            },
+          }}
+          exit={{
+            scale: 0,
+            transition: { duration: 0.5 },
+          }}
+        />
+      ))}
+    </motion.div>
+  )}
+</AnimatePresence>
 
       <motion.header
         initial={{ y: -100, opacity: 0 }}
