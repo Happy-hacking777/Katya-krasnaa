@@ -2,9 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
 import Image from 'next/image'
-
 
 // Step 1: Define a type for Artwork
 type Artwork = {
@@ -24,66 +22,63 @@ const artist = {
 }
 
 const artworks: Artwork[] = [
-  { id: 1, src: "/images/Picture1.png", title: "Double Portrait", description: "Oil on canvas", price: "€500" },
-  { id: 2, src: "/images/Picture7.png", title: "Reinventing Kusama", description: "Oil on canvas", price: "€800" },
-  { id: 3, src: "/images/Picture2.png", title: "Abstract", description: "Oil on canvas", price: "€800" },
-  { id: 4, src: "/images/Picture3.png", title: "Portrait 2", description: "Oil on canvas", price: "€700" },
-  { id: 5, src: "/images/Picture4.png", title: "My Dog", description: "Oil on canvas", price: "€300" },
-  { id: 6, src: "/images/Picture5.png", title: "David in Leaves", description: "Oil on canvas", price: "€600" },
-  { id: 7, src: "/images/Picture6.png", title: "Venera in Leaves", description: "Oil on canvas", price: "€600" },
+  { id: 1, src: "/images/Kusama.jpg", title: "Kusama", description: "Oil on canvas, 120x100, Saint-Petersburg, Russia", price: "€3600" },
+  { id: 2, src: "/images/F+D.jpg", title: "F+D", description: "Oil on canvas, 90x80, 2022, Moscow, Russia", price: "SOLD" },
+  { id: 3, src: "/images/Girl with an earring.jpg", title: "Girl with an earring", description: "Oil on canvas, 2023, Saint-Petersburg, Russi", price: "SOLD" },
+  { id: 4, src: "/images/D+D.jpg", title: "D+D", description: "Oil on canvas , 100x100, 2024 Lisbon, Portugal", price: "€2400" },
+  { id: 5, src: "/images/Flower.jpg", title: "Flower", description: "Oil on canvas. 120x100, oil on canvas, Saint-Petersburg, Russia", price: "€2600" },
+  { id: 6, src: "/images/Sara Lucas.jpg", title: "Sara Lucas", description: "Oil on canvas. 120x100, 2022, Saint-Petersburg, Russia", price: "€3700" },
+  { id: 7, src: "/images/F+M.jpg", title: "F+M", description: "Oil on canvas, 120x100, 2021, Saint-Petersburg", price: "SOLD" },
+  { id: 8, src: "/images/H+W.jpg", title: "H+W", description: "Oil on canvas, 120x100, 2024 Lisbon, Portugal", price: "€2400" },
+  { id: 9, src: "/images/V+L.jpg", title: "V+L", description: "Oil on canvas, 130x100, 2024 Lisbon, Portugal", price: "€2400" },
+  { id: 10, src: "/images/D+M.jpg", title: "D+M", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€2400" },
+  { id: 11, src: "/images/I+S.jpg", title: "I+S", description: "Oil on canvas, 170x100, 2024, Lisbon, Portugal", price: "SOLD" },
+  { id: 12, src: "/images/Boy and Bear.jpg", title: "Boy and bear", description: "Oil on canvas, 120x100, 2024 , Lisbon, Portugal", price: "€1670" },
+  { id: 13, src: "/images/Kids horse.jpg", title: "Kid's horse", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
+  { id: 14, src: "/images/Brother and sister.jpg", title: "Brother and sister", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
 ]
 
 export default function SimplifiedArtistPortfolioComponent() {
-  // Step 2: Correct the state to handle Artwork or null
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
-  const [showFirework, setShowFirework] = useState(true);
-  const [zoom, setZoom] = useState(1); // Track zoom level
-  const [position, setPosition] = useState({ x: 0, y: 0 }); // Track position of the image when dragging
-  const [isDragging, setIsDragging] = useState(false);
-  const [startDrag, setStartDrag] = useState({ x: 0, y: 0 });
+  const [showFirework, setShowFirework] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
-  // Auto-hide the firework animation after 5 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowFirework(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Function to handle zoom in and out with mouse wheel
-  const handleZoom = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const zoomDirection = e.deltaY > 0 ? -0.1 : 0.1;
-    setZoom((prevZoom) => Math.max(1, prevZoom + zoomDirection)); // Ensure zoom doesn't go below 1
-  }
-
-  // Start dragging the image
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartDrag({ x: e.clientX - position.x, y: e.clientY - position.y });
-  }
-
-  // Move the image while dragging
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - startDrag.x,
-        y: e.clientY - startDrag.y,
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
       });
-    }
-  }
+    };
 
-  // Stop dragging the image
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  }
+    // Set initial size
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Show firework after a short delay
+    const showTimer = setTimeout(() => {
+      setShowFirework(true);
+    }, 100);
+
+    // Auto-hide firework after 5 seconds
+    const hideTimer = setTimeout(() => {
+      setShowFirework(false);
+    }, 5100);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white p-8 overflow-hidden">
-      {/* Firework animation */}
       <AnimatePresence>
-        {showFirework && (
+        {showFirework && windowSize.width > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -104,8 +99,8 @@ export default function SimplifiedArtistPortfolioComponent() {
                   rotate: 0,
                 }}
                 animate={{
-                  x: Math.cos(index * (Math.PI * 2 / artworks.length)) * (window.innerWidth < 640 ? 100 : 200),
-                  y: Math.sin(index * (Math.PI * 2 / artworks.length)) * (window.innerWidth < 640 ? 100 : 200),
+                  x: Math.cos(index * (Math.PI * 2 / artworks.length)) * (windowSize.width < 640 ? 100 : 200),
+                  y: Math.sin(index * (Math.PI * 2 / artworks.length)) * (windowSize.width < 640 ? 100 : 200),
                   scale: 1,
                   rotate: 360,
                   transition: {
@@ -124,11 +119,10 @@ export default function SimplifiedArtistPortfolioComponent() {
         )}
       </AnimatePresence>
 
-      {/* Artist Info */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: showFirework ? 5 : 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 5 }}
         className="max-w-4xl mx-auto mb-12 text-center"
       >
         <Image
@@ -142,28 +136,23 @@ export default function SimplifiedArtistPortfolioComponent() {
         <p className="text-xl text-gray-600">{artist.bio}</p>
       </motion.header>
 
-      {/* Artwork Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: showFirework ? 5.5 : 0.5 }}
+        transition={{ duration: 1, delay: 5.5 }}
         className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-16"
       >
         {artworks.map((artwork, index) => (
           <motion.div
             key={artwork.id}
             layoutId={`artwork-${artwork.id}`}
-            onClick={() => {
-              setSelectedArtwork(artwork); // Now it works correctly with types
-              setZoom(1); // Reset zoom level when new artwork is opened
-              setPosition({ x: 0, y: 0 }); // Reset position
-            }}
+            onClick={() => setSelectedArtwork(artwork)}
             className="cursor-pointer bg-white rounded-lg overflow-hidden shadow-lg"
             initial={{ opacity: 0, y: 50 }}
             animate={{
               opacity: 1,
               y: 0,
-              transition: { duration: 0.5, delay: (showFirework ? 5.5 : 0.5) + index * 0.1 },
+              transition: { duration: 0.5, delay: 5.5 + index * 0.1 },
             }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
             whileTap={{ scale: 0.95 }}
@@ -184,7 +173,6 @@ export default function SimplifiedArtistPortfolioComponent() {
         ))}
       </motion.div>
 
-      {/* Contact Section */}
       <footer className="mt-16 bg-gray-100 p-8 rounded-lg text-center">
         <h2 className="text-2xl font-bold mb-4">Contact the Artist</h2>
         <p className="text-lg text-gray-700">
