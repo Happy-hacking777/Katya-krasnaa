@@ -17,8 +17,8 @@ const artist = {
   name: "Katya Krasnaya",
   photo: "/images/Portret.png",
   bio: "Modern Artist | Based in Portugal | Creating Worldwide",
-  email: "katya.krasnaya@email.com",
-  phone: "+351 123 456 789",
+  email: "hellokrasnaya@gmail.com",
+  phone: "+351 913 210 271",
 }
 
 const artworks: Artwork[] = [
@@ -32,16 +32,13 @@ const artworks: Artwork[] = [
   { id: 8, src: "/images/H+W.jpg", title: "H+W", description: "Oil on canvas, 120x100, 2024 Lisbon, Portugal", price: "€2400" },
   { id: 9, src: "/images/V+L.jpg", title: "V+L", description: "Oil on canvas, 130x100, 2024 Lisbon, Portugal", price: "€2400" },
   { id: 10, src: "/images/D+M.jpg", title: "D+M", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€2400" },
-  { id: 11, src: "/images/I+S.jpg", title: "I+S", description: "Oil on canvas, 170x100, 2024, Lisbon, Portugal", price: "SOLD" },
-  { id: 12, src: "/images/Boy and Bear.jpg", title: "Boy and bear", description: "Oil on canvas, 120x100, 2024 , Lisbon, Portugal", price: "€1670" },
-  { id: 13, src: "/images/Kids horse.jpg", title: "Kid's horse", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
-  { id: 14, src: "/images/Brother and sister.jpg", title: "Brother and sister", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
 ]
 
 export default function SimplifiedArtistPortfolioComponent() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [showFirework, setShowFirework] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [zoomScale, setZoomScale] = useState(1); // State for zoom scale
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,49 +72,82 @@ export default function SimplifiedArtistPortfolioComponent() {
     };
   }, []);
 
+  // Zoom In and Out Functionality
+  const handleZoomIn = () => {
+    setZoomScale((prevScale) => Math.min(prevScale + 0.1, 5)); // Max zoom scale 5x
+  };
+
+  const handleZoomOut = () => {
+    setZoomScale((prevScale) => Math.max(prevScale - 0.1, 1)); // Min zoom scale 1x (100%)
+  };
+
   return (
     <div className="min-h-screen bg-white p-8 overflow-hidden">
-      <AnimatePresence>
-  {showFirework && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed inset-0 bg-black z-50 flex items-center justify-center"
-    >
-      {artworks.slice(0, 6).map((artwork, index) => ( // Limit to first 6 artworks
-        <motion.img
-          key={artwork.id}
-          src={artwork.src}
-          alt={artwork.title}
-          className="absolute w-40 h-40 object-cover rounded-full"
-          initial={{
-            x: 0,
-            y: 0,
-            scale: 0,
-            rotate: 0,
-          }}
-          animate={{
-            x: Math.cos(index * (Math.PI * 2 / 6)) * 200, // Using 6 items for position calculation
-            y: Math.sin(index * (Math.PI * 2 / 6)) * 200,
-            scale: 1,
-            rotate: 360,
-            transition: {
-              duration: 2,
-              delay: index * 0.2,
-              ease: "easeOut",
-            },
-          }}
-          exit={{
-            scale: 0,
-            transition: { duration: 0.5 },
-          }}
-        />
-      ))}
-    </motion.div>
-  )}
-</AnimatePresence>
+     <AnimatePresence>
+        {showFirework && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+          >
+            {artworks.slice(0, 6).map((artwork, index) => {
+              const isMobile = windowSize.width <= 768;
+              const radius = isMobile ? 100 : 200;
+              const imgSize = isMobile ? "w-20 h-20" : "w-40 h-40";
+              return (
+                <motion.img
+                  key={artwork.id}
+                  src={artwork.src}
+                  alt={artwork.title}
+                  className={`absolute ${imgSize} object-cover rounded-full`}
+                  initial={{
+                    x: 0,
+                    y: 0,
+                    scale: 0,
+                    rotate: 0,
+                  }}
+                  animate={{
+                    x: Math.cos(index * (Math.PI * 2 / 6)) * radius,
+                    y: Math.sin(index * (Math.PI * 2 / 6)) * radius,
+                    scale: 1,
+                    rotate: 360,
+                    transition: {
+                      duration: 2,
+                      delay: index * 0.2,
+                      ease: "easeOut",
+                    },
+                  }}
+                  exit={{
+                    scale: 0,
+                    transition: { duration: 0.5 },
+                  }}
+                />
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Zoomable Artwork Modal - Desktop Only */}
+      {selectedArtwork && windowSize.width > 768 && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center" onClick={() => setSelectedArtwork(null)}>
+          <div className="relative">
+            <motion.img
+              src={selectedArtwork.src}
+              alt={selectedArtwork.title}
+              style={{ transform: `scale(${zoomScale})` }} // Apply zoom
+              className="max-w-full max-h-screen object-contain"
+            />
+            {/* Zoom controls */}
+            {/* <div className="absolute bottom-4 right-4 flex space-x-2">
+              <button onClick={handleZoomIn} className="bg-white p-2 rounded shadow-lg text-xl">+</button> {/* "+" button */}
+              {/* <button onClick={handleZoomOut} className="bg-white p-2 rounded shadow-lg text-xl">-</button> {/* "-" button */}
+            {/* </div> }}*/} 
+          </div>
+        </div>
+      )}
 
       <motion.header
         initial={{ y: -100, opacity: 0 }}
