@@ -32,6 +32,10 @@ const artworks: Artwork[] = [
   { id: 8, src: "/images/H+W.jpg", title: "H+W", description: "Oil on canvas, 120x100, 2024 Lisbon, Portugal", price: "€2400" },
   { id: 9, src: "/images/V+L.jpg", title: "V+L", description: "Oil on canvas, 130x100, 2024 Lisbon, Portugal", price: "€2400" },
   { id: 10, src: "/images/D+M.jpg", title: "D+M", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€2400" },
+  { id: 11, src: "/images/I+S.jpg", title: "I+S", description: "Oil on canvas, 170x100, 2024, Lisbon, Portugal", price: "SOLD" },
+  { id: 12, src: "/images/Boy and Bear.jpg", title: "Boy and bear", description: "Oil on canvas, 120x100, 2024 , Lisbon, Portugal", price: "€1670" },
+  { id: 13, src: "/images/Kids horse.jpg", title: "Kid's horse", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
+  { id: 14, src: "/images/Brother and sister.jpg", title: "Brother and sister", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
 ]
 
 export default function SimplifiedArtistPortfolioComponent() {
