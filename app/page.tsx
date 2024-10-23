@@ -24,10 +24,10 @@ const artist = {
 const artworks: Artwork[] = [
   { id: 1, src: "/images/Kusama.jpg", title: "Kusama", description: "Oil on canvas, 120x100, Saint-Petersburg, Russia", price: "€3600" },
   { id: 2, src: "/images/F+D.jpg", title: "F+D", description: "Oil on canvas, 90x80, 2022, Moscow, Russia", price: "SOLD" },
-  { id: 3, src: "/images/Girl with an earring.jpg", title: "Girl with an earring", description: "Oil on canvas, 2023, Saint-Petersburg, Russi", price: "SOLD" },
-  { id: 4, src: "/images/D+D.jpg", title: "D+D", description: "Oil on canvas , 100x100, 2024 Lisbon, Portugal", price: "€2400" },
+  { id: 3, src: "/images/Girl with an earring.jpg", title: "Girl with an earring", description: "Oil on canvas, 2023, Saint-Petersburg, Russia", price: "SOLD" },
+  { id: 4, src: "/images/D+D.jpg", title: "D+D", description: "Oil on canvas , 100x100, 2024, Lisbon, Portugal", price: "€2400" },
   { id: 5, src: "/images/Flower.jpg", title: "Flower", description: "Oil on canvas. 120x100, oil on canvas, Saint-Petersburg, Russia", price: "€2600" },
-  { id: 6, src: "/images/Sara Lucas.jpg", title: "Sara Lucas", description: "Oil on canvas. 120x100, 2022, Saint-Petersburg, Russia", price: "€3700" },
+  { id: 6, src: "/images/Sara Lucas.jpg", title: "Sara Lucas", description: "Oil on canvas. 120x100, 2022, Saint-Petersburg, Russia", price: "SOLD" },
   { id: 7, src: "/images/F+M.jpg", title: "F+M", description: "Oil on canvas, 120x100, 2021, Saint-Petersburg", price: "SOLD" },
   { id: 8, src: "/images/H+W.jpg", title: "H+W", description: "Oil on canvas, 120x100, 2024 Lisbon, Portugal", price: "€2400" },
   { id: 9, src: "/images/V+L.jpg", title: "V+L", description: "Oil on canvas, 130x100, 2024 Lisbon, Portugal", price: "€2400" },
