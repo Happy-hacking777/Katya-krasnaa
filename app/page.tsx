@@ -22,9 +22,9 @@ const artist = {
 }
 
 const artworks: Artwork[] = [
-  { id: 1, src: "/images/Kusama.jpg", title: "Kusama", description: "Oil on canvas, 120x100, Saint-Petersburg, Russia", price: "€3600" },
+  { id: 1, src: "/images/Girl with an earring.jpg", title: "Girl with an earring", description: "Oil on canvas, 2023, Saint-Petersburg, Russia", price: "SOLD" },
   { id: 2, src: "/images/F+D.jpg", title: "F+D", description: "Oil on canvas, 90x80, 2022, Moscow, Russia", price: "SOLD" },
-  { id: 3, src: "/images/Girl with an earring.jpg", title: "Girl with an earring", description: "Oil on canvas, 2023, Saint-Petersburg, Russia", price: "SOLD" },
+  { id: 3, src: "/images/Kusama.jpg", title: "Kusama", description: "Oil on canvas, 120x100, Saint-Petersburg, Russia", price: "€3600" },
   { id: 4, src: "/images/D+D.jpg", title: "D+D", description: "Oil on canvas , 100x100, 2024, Lisbon, Portugal", price: "€2400" },
   { id: 5, src: "/images/Flower.jpg", title: "Flower", description: "Oil on canvas. 120x100, oil on canvas, Saint-Petersburg, Russia", price: "€2600" },
   { id: 6, src: "/images/Sara Lucas.jpg", title: "Sara Lucas", description: "Oil on canvas. 120x100, 2022, Saint-Petersburg, Russia", price: "SOLD" },
@@ -36,7 +36,17 @@ const artworks: Artwork[] = [
   { id: 12, src: "/images/Boy and Bear.jpg", title: "Boy and bear", description: "Oil on canvas, 120x100, 2024 , Lisbon, Portugal", price: "€1670" },
   { id: 13, src: "/images/Kids horse.jpg", title: "Kid's horse", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
   { id: 14, src: "/images/Brother and sister.jpg", title: "Brother and sister", description: "Oil on canvas, 120x100, 2024, Lisbon, Portugal", price: "€1890" },
+  { id: 15, src: "/images/Clementina in blue garden.jpg", title: "Clementina in blue garden", description: "Oil on canvas, 120x100, Moscow, Russia", price: "SOLD" },
+  { id: 16, src: "/images/Meats.jpg", title: "Meats", description: "Oil on canvas,150x150, Moscow, Russia", price: "SOLD" },
+  { id: 17, src: "/images/Ballon dog.jpg", title: "Ballon dog", description: "Oil on canvas, 120x100,2019, Moscow, Russia", price: "SOLD" },
+  { id: 18, src: "/images/F+K.jpg", title: "F+K", description: "Oil on canvas, 100x90,2019, Moscow, Russia", price: "SOLD" },
+  { id: 19, src: "/images/C+B.jpg", title: "C+B", description: "Oil on canvas, 140x100, 2020, Saint-Petersburg, Russia", price: "SOLD" },
+  { id: 20, src: "/images/Drank face Venera.jpg", title: "Drank face Venera", description: "Oil on canvas, 190x110, 2019, Moscow, Russia", price: "SOLD" },
+  { id: 21, src: "/images/David in the garden.jpg", title: "David in the garden", description: "Oil on canvas, 180x110, 2019, Moscow, Russia", price: "SOLD" }
+
+
 ]
+
 
 export default function SimplifiedArtistPortfolioComponent() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
@@ -208,14 +218,35 @@ export default function SimplifiedArtistPortfolioComponent() {
       </motion.div>
 
       <footer className="mt-16 bg-gray-100 p-8 rounded-lg text-center">
-        <h2 className="text-2xl font-bold mb-4">Contact the Artist</h2>
-        <p className="text-lg text-gray-700">
-          Email: <a href={`mailto:${artist.email}`} className="text-primary hover:underline">{artist.email}</a>
-        </p>
-        <p className="text-lg text-gray-700">
-          Phone: <a href={`tel:${artist.phone}`} className="text-primary hover:underline">{artist.phone}</a>
-        </p>
-      </footer>
+  <h2 className="text-2xl font-bold mb-4">Contact the Artist</h2>
+  
+  <p className="text-lg text-gray-700">
+    Email: <a href={`mailto:${artist.email}`} className="text-primary hover:underline">{artist.email}</a>
+  </p>
+  
+  <p className="text-lg text-gray-700">
+    Phone: <a href={`tel:${artist.phone}`} className="text-primary hover:underline">{artist.phone}</a>
+  </p>
+  
+  {/* Instagram Link */}
+  <div className="flex items-center justify-center mt-4 space-x-4">
+  <a
+      href="https://www.instagram.com/katyakrasnaya"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center space-x-2"
+    >
+      {/* Instagram Icon */}
+      <Image
+        src="/images/instagram-icon.png" // Ensure the correct path for the Instagram icon
+        alt="Instagram"
+        width={24}
+        height={24}
+        className="hover:scale-110 transition-transform"
+      />
+    </a>
+  </div>
+</footer>
     </div>
   )
 }
