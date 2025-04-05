@@ -18,7 +18,7 @@ const artist = {
   photo: "/images/Portret.png",
   bio: "Modern Artist | Based in Portugal | Creating Worldwide",
   email: "hellokrasnaya@gmail.com",
-  phone: "+351 913 210 271",
+  phone: "+351 933 941 249",
 }
 
 const artworks: Artwork[] = [
